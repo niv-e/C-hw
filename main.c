@@ -33,7 +33,6 @@ int main()
 	do{
 		runMenu();
 		scanf("%d",&choice);
-		getchar();
 		runSelectedOption(choice, &manager, &airline);
 	}while(choice!=6);
 

@@ -1,5 +1,5 @@
-main.o: ../main.c ../Airport.h ../Airline.h ../Flight.h ../Clock.h \
- ../Date.h ../AirportManager.h ../exe.h
+main.o: ../main.c ../Airport.h ../Airline.h ../Flight.h \
+ ../AirportManager.h ../Clock.h ../Date.h ../exe.h
 
 ../Airport.h:
 
@@ -7,10 +7,10 @@ main.o: ../main.c ../Airport.h ../Airline.h ../Flight.h ../Clock.h \
 
 ../Flight.h:
 
+../AirportManager.h:
+
 ../Clock.h:
 
 ../Date.h:
-
-../AirportManager.h:
 
 ../exe.h:

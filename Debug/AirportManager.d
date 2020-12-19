@@ -1,14 +1,5 @@
-AirportManager.o: ../AirportManager.c ../AirportManager.h ../Airport.h \
- ../Airline.h ../Flight.h ../Clock.h ../Date.h
+AirportManager.o: ../AirportManager.c ../AirportManager.h ../Airport.h
 
 ../AirportManager.h:
 
 ../Airport.h:
-
-../Airline.h:
-
-../Flight.h:
-
-../Clock.h:
-
-../Date.h:

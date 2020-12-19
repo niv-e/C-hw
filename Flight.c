@@ -11,18 +11,32 @@
 #include <stdlib.h>
 #include <string.h>
 
-Flight* initFlight()
+Flight* initFlight(AirportManager* manager)
 {
+
 	Flight* flight = (Flight*)malloc(sizeof(Flight));
-	if (!flight) // (clock == NULL) --> allocaton didn't succeed
+	if (!flight) // (flight == NULL) --> allocation didn't succeed
 	{
 		printf("ERROR! Out of memory!\n");
 		return NULL;
 	}
 
-	printf("Please enter flight departure Airport IATA code, make sure that the code exactly length of 3: \n");
-	char tempSrcIata[LEN];
-	myGets(tempSrcIata,LEN);
+	printf("Please enter flight departure Airport IATA code,"
+			" make sure that the code exactly length of 3: \n");
+	char tempSrcIata[IATA_LEN+1];
+	char temp = getchar();
+	int count=0;
+	while(temp == '\n')
+	{
+		temp = getchar();
+	}
+	while(count<IATA_LEN)
+	{
+		tempSrcIata[count] = temp;
+		count++;
+		temp = getchar();
+	}
+	tempSrcIata[IATA_LEN]='\0';
 	if(!(checkIfValideIata(tempSrcIata)))
 		return NULL;
 
@@ -38,16 +52,30 @@ Flight* initFlight()
 		{
 			flag =1;
 		}
-
 	}
-	Clock *clock =NULL;
-	while (!clock)
+
+	int isExist = checkIfIataCodeExist(manager,tempSrcIata);
+	if(isExist==0)
+	{
+		printf("The entered departure IATA code does not exist\n");
+		return NULL;
+	}
+
+	isExist = checkIfIataCodeExist(manager,tempDestIata);
+	if(isExist==0)
+	{
+		printf("The entered destination IATA code does not exist.. please try again\n ");
+		return NULL;
+	}
+
+	Clock *clock = NULL;
+	while (clock==NULL)
 	{
 		clock=setTime();
 	}
 
 	Date* date = NULL;
-	while (!date)
+	while (date==NULL)
 	{
 		date=setDate();
 	}
@@ -109,23 +137,3 @@ void freeFlight(Flight* flight)
 
 }
 
-//int checkHowManyFlightsOnLine (Flight** allFlight , int allFlightSize,char* iataCodeSrc, char* iataCodeDest )
-//{
-//	int count=0;
-//	int numOfFlights;
-//	int sameSrc;
-//	int sameDest;
-//
-//	while(count <allFlightSize)
-//	{
-//		sameSrc = strcmp(allFlight[count]->iataCodeSrc , iataCodeSrc);
-//		sameDest = strcmp(allFlight[count]->iataCodeDest , iataCodeDest);
-//		if(sameDest && sameSrc)
-//		{
-//			numOfFlights++;
-//		}
-//		count ++;
-//	}
-//	return numOfFlights;
-//
-//}

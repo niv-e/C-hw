@@ -8,8 +8,7 @@
 #ifndef FLIGHT_H_
 #define FLIGHT_H_
 
-//#include "Airport.h"
-//#include "AirportManager.h"
+#include "AirportManager.h"
 #include "Clock.h"
 #include "Date.h"
 #include <stdio.h>
@@ -22,7 +21,7 @@ typedef struct
 	Date* date;
 }Flight;
 
-Flight* initFlight();
+Flight* initFlight(AirportManager* manager);
 int checkIfFlightLandingAtDest(Flight flight ,char* iataCodeSrc, char* iataCodeDest);
 void printFlightDetails(Flight* flight);
 void freeFlight(Flight* flight);

@@ -21,14 +21,14 @@ int initAirportManager(AirportManager *manager)
 	printf("Initializing the Airport manager\n");
 	printf("Please enter how many airport you would like to add: \n");
 	scanf("%d",&numOfAirports);
-	while(!(isdigit(numOfAirports))){
+	while(numOfAirports==0){
 		printf("Invalid index! make sure that you entered a number!..\n");
 		printf("Please try again..\n");
-	    while ((getchar()) != '\n');
-	    char ch = getchar();
-	    numOfAirports = (int)(ch);
+	    while ((getchar()) != '\n'){}
+		scanf("%d",&numOfAirports);
+
 	}
-    char ch = getchar();
+//    char ch = getchar(); //clean the \n
 
 
 	manager->allAirports = (Airport*)malloc(numOfAirports*sizeof(Airport));
@@ -101,7 +101,7 @@ void freeAirportManager(AirportManager *manager)
 	int count =0;
 	while(count<manager->numberOfCurrentAirports)
 	{
-		freeAirport(&manager->allAirports[count]);
+		freeAirport(&manager->allAirports[count++]);
 	}
 
 }

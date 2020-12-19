@@ -52,15 +52,17 @@ int checkHowManyFlightsOnLine (Airline *airline ,char* iataCodeSrc, char* iataCo
 {
 	int numOfCourrentFlight = airline->numOfFlights;
 	int count=0;
-	int numOfMatchFlights;
-	int sameSrc;
-	int sameDest;
+	int numOfMatchFlights=0;
+	int sameSrc=1;
+	int sameDest=1;
 
 	while(count <numOfCourrentFlight)
 	{
-		sameSrc = strcmp(airline->allFlights[count]->iataCodeSrc , iataCodeSrc);
-		sameDest = strcmp(airline->allFlights[count]->iataCodeDest , iataCodeDest);
-		if(sameDest && sameSrc)
+		char* flightSrc =(airline->allFlights[count]->iataCodeSrc);
+		char* flightDest = airline->allFlights[count]->iataCodeDest;
+		sameSrc = strcmp(flightSrc, iataCodeSrc);
+		sameDest = strcmp(flightDest , iataCodeDest);
+		if(sameDest==0 && sameSrc==0)
 		{
 			numOfMatchFlights++;
 		}

@@ -28,8 +28,8 @@ Clock* setTime()
 	int tempMinetes;
 
 	printf("Please enter time in format HH:MM :\n");
-	myGets(tempTime,TIME_LEN);
-//	printf( "%s\n", tempTime );
+	scanf("%s",tempTime);
+
 	token = strtok(tempTime, delim);
 	tempHours = atoi(token);
 	token = strtok(NULL, delim);
@@ -43,7 +43,8 @@ Clock* setTime()
 	}
 
 	printf( "Invalid time! please try again...\n");
-	 return NULL;
+	free(clock);
+	return NULL;
 }
 
 int checkValiadHours(int hours)

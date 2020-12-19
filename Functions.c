@@ -50,11 +50,10 @@ char* getStringInLowerCaseAndWordIndexs(int* numOfWords ,int** wordsIndexes)
 	printf("Please enter airport name: \n");
 	char tempName[255];
 	char tempChar = getchar();
-	if (tempChar==' ')
+	while (tempChar==' ')
 	{
 		printf("Name can not start with space! please try again...\n");
-		return NULL;
-
+		tempChar = getchar();
 	}
 	int* tempWordIndex = (int*)malloc(10 * sizeof(int));
 	*numOfWords=1;
@@ -81,8 +80,9 @@ char* getStringInLowerCaseAndWordIndexs(int* numOfWords ,int** wordsIndexes)
 		else
 			tempChar=getchar();
 	}
-	if(*numOfWords>1)
-		*numOfWords=*numOfWords-1;
+	tempName[i]='\0';
+//	if(*numOfWords>1)
+//		*numOfWords=*numOfWords-1;
 	char* name=strdup(tempName); //this function do dynamic allocation make sure the free "name"
 	*wordsIndexes = tempWordIndex; //make sure to free wordIndexes
 	return name;
@@ -102,7 +102,7 @@ int firstLetterUpper(char** string ,const int numOfWord ,const int* wordsIndexes
 
 	for(int i=0 ; i<numOfWord-1 ; i++)
 	{
-		*(*string+wordsIndexes[i])=toupper(*(*string+wordsIndexes[i]));
+		*(*string+*(wordsIndexes+i))=toupper(*(*string+*(wordsIndexes+i)));
 	}
 	return 1;
 }
@@ -120,8 +120,14 @@ int* getWordsSizeArr(const char* string,const int numOfWord)
 	int* wordSize= (int*)malloc(sizeof(int)*numOfWord);
 	int wordCounter=0;
 	int startWordIndex=0;
+	int stringSize =strlen(string);
 
-	for(int k=0; k<strlen(string);k++)
+	if(numOfWord==1)
+	{
+		wordSize[0]=stringSize;
+		return wordSize;
+	}
+	for(int k=0; k<=stringSize;k++)
 	{
 		if(string[k]==' ' && string[k-1] == ' ')
 		{
@@ -137,6 +143,11 @@ int* getWordsSizeArr(const char* string,const int numOfWord)
 			}
 			wordCounter++;
 		}
+		else if(string[k]=='\0')
+		{
+			wordSize[wordCounter]=stringSize-startWordIndex-1;
+
+		}
 
 	}
 	return wordSize;
@@ -151,7 +162,12 @@ int makeOneBigOneSmallIfEven(char** string , const int* wordSizes ,const int* wo
  * */
 {
 
-	for (int i = 0; i <= numOfWords; i++) {
+	if(numOfWords==1)
+	{
+		*(*string)=toupper(*(*string));
+		return 1;
+	}
+	for (int i = 0; i < numOfWords; i++) {
 		if (wordSizes[i] % 2 == 0) {
 			int firstWordIndex;
 			int lastWordIndex;
@@ -161,7 +177,7 @@ int makeOneBigOneSmallIfEven(char** string , const int* wordSizes ,const int* wo
 			else
 				firstWordIndex = wordsIndexes[i];
 
-			if (i == numOfWords)
+			if (i == numOfWords-1)
 				lastWordIndex = strlen(*string);
 
 			else

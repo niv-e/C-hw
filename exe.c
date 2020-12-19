@@ -27,14 +27,20 @@ void runSelectedOption(int optionNumber ,AirportManager *manager,Airline *airlin
 	switch(optionNumber)
 	{
 	   case 1 :;
-	   	   Flight* flight = initFlight();
-		   addFlightToAirline(airline, flight);
-		   printAirline(airline);
+	   	   Flight* flight = initFlight(manager);
+		   if(flight){
+		   	   addFlightToAirline(airline, flight);
+			   printAirline(airline);
+		   }
 		   break;
 
 	   case 2 :;
 
-		   Airport *airport = initAirport();
+		   Airport *airport = NULL;
+		   while(airport == NULL){
+			   initAirport();
+
+		   }
 		   int isExist = checkIfIataCodeExist(manager,airport->iata);
 		   while(isExist)
 			   isExist = checkIfIataCodeExist(manager,airport->iata);
@@ -52,6 +58,7 @@ void runSelectedOption(int optionNumber ,AirportManager *manager,Airline *airlin
 
 	   case 5 :;
 			printf("Please enter departure Airport IATA code:\n");
+			getchar();
 			char tempSrcIata[LEN];
 			myGets(tempSrcIata,LEN);
 			char tempDestIata[LEN];
@@ -67,6 +74,7 @@ void runSelectedOption(int optionNumber ,AirportManager *manager,Airline *airlin
 
 	   case 6 :;
 	   	   freeAirportManager(manager);
+	   	   freeAirLine(airline);
 	   	   printf("The program was executed successfully");
 	   	   break;
 	}

@@ -57,7 +57,7 @@ int setAirportName(Airport* pAirport)
 
 	pAirport->name=airportName;
 
-	printf("Airport line 70: airport->name: %s\n",pAirport->name);
+	free(wordsIndexes);//this array was just for the name format;
 	return 1;
 }
 
@@ -66,6 +66,8 @@ int setAirportName(Airport* pAirport)
 int setAirportCountry(Airport* pAirport)
 {
 	printf("Please enter airport country: \n");
+	getchar();//clean the buffer
+
 	char tempCountry[LEN];
 	myGets(tempCountry, LEN);
 
@@ -83,7 +85,7 @@ int setAirportCountry(Airport* pAirport)
 int checkIfValideIata(const char* iata)
 {
 	int tempSize = strlen(iata);
-	if(tempSize==0 || tempSize>3)
+	if(tempSize!=3)
 	{
 		printf("Invalid IATA code... make sure that the length of the code no more the 3.\n");
 		return 0;
@@ -126,6 +128,7 @@ int setAirpotIata(Airport* pAirport)
  * */
 Airport* initAirport()
 {
+
 	Airport *airport = (Airport*)malloc(sizeof(Airport));
 	int countryFlag , nameFlag ,iataFlag;
 
