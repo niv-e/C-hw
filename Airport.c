@@ -43,18 +43,25 @@ int	checkIATACode(Airport* pAirport , const char* iataCode)
 
 int setAirportName(Airport* pAirport)
 {
-	printf("Please enter airport name: \n");
-	char tempName[LEN];
-	myGets(tempName, LEN);
-	int tempSize = sizeof(tempName)/sizeof(tempName[0]);
-	if(tempSize==0)
-	{
-		return 0;
-	}
-	pAirport->name=strdup(tempName);
-	return 1;
+	int numOfWordsInName;
+	int* wordsIndexes=NULL;
+	char * airportName = getStringInLowerCaseAndWordIndexs(&numOfWordsInName,&wordsIndexes);
 
+	firstLetterUpper(&airportName, numOfWordsInName, wordsIndexes);
+
+	int* wordSizes = getWordsSizeArr(airportName,numOfWordsInName);
+
+	makeOneBigOneSmallIfEven(&airportName , wordSizes ,wordsIndexes, numOfWordsInName);
+
+	avoidFormSpacesAtEnd(&airportName);
+
+	pAirport->name=airportName;
+
+	printf("Airport line 70: airport->name: %s\n",pAirport->name);
+	return 1;
 }
+
+
 
 int setAirportCountry(Airport* pAirport)
 {

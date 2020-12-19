@@ -1,10 +1,3 @@
-/*
- * Airline.c
- *
- *  Created on: 13 Dec 2020
- *      Author: niv
- */
-
 
 #include "Airline.h"
 #include <stdio.h>

@@ -27,7 +27,7 @@ void runSelectedOption(int optionNumber ,AirportManager *manager,Airline *airlin
 	switch(optionNumber)
 	{
 	   case 1 :;
-		   Flight* flight = initFlight();
+	   	   Flight* flight = initFlight();
 		   addFlightToAirline(airline, flight);
 		   printAirline(airline);
 		   break;

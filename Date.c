@@ -33,7 +33,6 @@ Date* setDate()
 
 	printf("Please enter a date in format DD/MM/YYYY : \n");
 	myGets(tempDate,DATE_LEN);
-	printf("tempDate: %s \n",tempDate);
 	getchar();
 	token = strtok(tempDate, delim);
 	day = atoi(token);

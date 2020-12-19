@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 int initAirportManager(AirportManager *manager)
 {
@@ -20,7 +21,15 @@ int initAirportManager(AirportManager *manager)
 	printf("Initializing the Airport manager\n");
 	printf("Please enter how many airport you would like to add: \n");
 	scanf("%d",&numOfAirports);
-	getchar(); //clean the \n
+	while(!(isdigit(numOfAirports))){
+		printf("Invalid index! make sure that you entered a number!..\n");
+		printf("Please try again..\n");
+	    while ((getchar()) != '\n');
+	    char ch = getchar();
+	    numOfAirports = (int)(ch);
+	}
+    char ch = getchar();
+
 
 	manager->allAirports = (Airport*)malloc(numOfAirports*sizeof(Airport));
 
@@ -63,11 +72,12 @@ Airport* getAirportByIataCode(AirportManager *manager, const char* iataCode)
 int checkIfIataCodeExist(AirportManager *manager , char* iataCode)
 {
 	int i=0;
-	while(i<manager->numberOfCurrentAirports)
+	while(i< (manager->numberOfCurrentAirports))
 	{
 		int res =strcmp(manager->allAirports[i].iata,iataCode);
 		if(res==0)
 			return 1;
+		i++;
 	}
 	return 0;
 

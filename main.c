@@ -25,22 +25,17 @@ int main()
 
 	AirportManager manager;
 	initAirportManager(&manager);
-//	printAirportManager(&manager);
 
 	Airline airline;
 	initAirline(&airline);
-//	printAirline(&airline);
 
-	runMenu();
 	int choice;
-	scanf("%d",&choice);
-	getchar();
-	while(choice!=6)
-	{
-		runSelectedOption(choice, &manager, &airline);
+	do{
 		runMenu();
 		scanf("%d",&choice);
 		getchar();
-	}
+		runSelectedOption(choice, &manager, &airline);
+	}while(choice!=6);
+
 
 }
