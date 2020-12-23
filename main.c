@@ -24,10 +24,17 @@ int main()
 {
 
 	AirportManager manager;
-	initAirportManager(&manager);
-
+	int initSucceeded =initAirportManager(&manager);
+	while(!initSucceeded)
+	{
+		initSucceeded =initAirportManager(&manager);
+	}
 	Airline airline;
-	initAirline(&airline);
+	initSucceeded=initAirline(&airline);
+	while(!initSucceeded)
+	{
+		initSucceeded =initAirline(&airline);
+	}
 
 	int choice;
 	do{

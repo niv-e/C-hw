@@ -23,26 +23,17 @@ Flight* initFlight(AirportManager* manager)
 
 	printf("Please enter flight departure Airport IATA code,"
 			" make sure that the code exactly length of 3: \n");
+	getchar();
 	char tempSrcIata[IATA_LEN+1];
-	char temp = getchar();
-	int count=0;
-	while(temp == '\n')
-	{
-		temp = getchar();
-	}
-	while(count<IATA_LEN)
-	{
-		tempSrcIata[count] = temp;
-		count++;
-		temp = getchar();
-	}
-	tempSrcIata[IATA_LEN]='\0';
-	if(!(checkIfValideIata(tempSrcIata)))
+	myGets(tempSrcIata,LEN);
+	if(!(checkIfValideIata(tempSrcIata))){
+		free(flight);
 		return NULL;
+	}
 
 	int flag =0;
 	int isValid;
-	char tempDestIata[LEN];
+	char tempDestIata[LEN+1];
 	while(flag==0)
 	{
 		printf("Please enter flight destination Airport IATA code, make sure that the code exactly length of 3: \n");
@@ -52,12 +43,16 @@ Flight* initFlight(AirportManager* manager)
 		{
 			flag =1;
 		}
+		else{
+			printf("Invalid destination Airport IATA code... please try again \n");
+		}
 	}
 
 	int isExist = checkIfIataCodeExist(manager,tempSrcIata);
 	if(isExist==0)
 	{
 		printf("The entered departure IATA code does not exist\n");
+		free(flight);
 		return NULL;
 	}
 
@@ -65,6 +60,7 @@ Flight* initFlight(AirportManager* manager)
 	if(isExist==0)
 	{
 		printf("The entered destination IATA code does not exist.. please try again\n ");
+		free(flight);
 		return NULL;
 	}
 
@@ -88,6 +84,28 @@ Flight* initFlight(AirportManager* manager)
 	return flight;
 }
 
+int checkHowManyFlightsOnLine (Flight **allFlights,int allFlightSize ,char* iataCodeSrc, char* iataCodeDest)
+{
+	int count=0;
+	int numOfMatchFlights=0;
+	int sameSrc=1;
+	int sameDest=1;
+
+	while(count <allFlightSize)
+	{
+		char* flightSrc =(allFlights[count]->iataCodeSrc);
+		char* flightDest = (allFlights[count]->iataCodeDest);
+		sameSrc = strcmp(flightSrc, iataCodeSrc);
+		sameDest = strcmp(flightDest , iataCodeDest);
+		if(sameDest==0 && sameSrc==0)
+		{
+			numOfMatchFlights++;
+		}
+		count ++;
+	}
+	return numOfMatchFlights;
+
+}
 
 int checkIfFlightLandingAtDest(const Flight flight ,char* iataCodeSrc, char* iataCodeDest)
 {

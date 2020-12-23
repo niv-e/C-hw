@@ -28,20 +28,27 @@ int initAirportManager(AirportManager *manager)
 		scanf("%d",&numOfAirports);
 
 	}
-//    char ch = getchar(); //clean the \n
 
 
 	manager->allAirports = (Airport*)malloc(numOfAirports*sizeof(Airport));
+    if(!(manager->allAirports))
+    {
+        printf("Error! memory not allocated.");
+        return 0;
+    }
 
 	int count=0;
 	while(count<numOfAirports)
 	{
-		Airport* tempAirport = initAirport();
-		if(tempAirport)
+		Airport* tempAirport = initAirport(); //the returned airport is after malloc
+		if(!tempAirport)
 		{
-			addNewAirport(manager, tempAirport);
-			count++;
+			return 0;
 		}
+
+		int res=addNewAirport(manager, tempAirport);
+		if(res==1)
+			count++;
 	}
 
 	return 1;
@@ -50,6 +57,12 @@ int initAirportManager(AirportManager *manager)
 
 int addNewAirport(AirportManager *manager , const Airport *airport)
 {
+	int isExist = checkIfIataCodeExist(manager, airport->iata);
+	if(isExist)
+	{
+		printf("Airport already exist! please try again..\n ");
+		return 0;
+	}
 	int numberOfCurrentAirports = manager->numberOfCurrentAirports;
 	manager->allAirports=(Airport*)realloc(manager->allAirports,(numberOfCurrentAirports+1)*sizeof(Airport));
 	manager->allAirports[numberOfCurrentAirports]=*airport;
@@ -69,14 +82,14 @@ Airport* getAirportByIataCode(AirportManager *manager, const char* iataCode)
 	return NULL;
 }
 
-int checkIfIataCodeExist(AirportManager *manager , char* iataCode)
+int checkIfIataCodeExist(AirportManager *manager ,const char* iataCode)
 {
 	int i=0;
 	while(i< (manager->numberOfCurrentAirports))
 	{
 		int res =strcmp(manager->allAirports[i].iata,iataCode);
 		if(res==0)
-			return 1;
+			return 1; //return 1 because airport was found
 		i++;
 	}
 	return 0;

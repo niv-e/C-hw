@@ -27,7 +27,7 @@ void runSelectedOption(int optionNumber ,AirportManager *manager,Airline *airlin
 	switch(optionNumber)
 	{
 	   case 1 :;
-	   	   Flight* flight = initFlight(manager);
+	   	   Flight* flight = initFlight(manager); //this function return flight after malloc
 		   if(flight){
 		   	   addFlightToAirline(airline, flight);
 			   printAirline(airline);
@@ -37,13 +37,16 @@ void runSelectedOption(int optionNumber ,AirportManager *manager,Airline *airlin
 	   case 2 :;
 
 		   Airport *airport = NULL;
-		   while(airport == NULL){
-			   initAirport();
-
+		   while(!airport){
+			   airport=initAirport();
 		   }
 		   int isExist = checkIfIataCodeExist(manager,airport->iata);
 		   while(isExist)
+		   {
+			   printf("The entered airport already exist.. please try again\n");
+			   airport=initAirport();
 			   isExist = checkIfIataCodeExist(manager,airport->iata);
+		   }
 		   addNewAirport(manager, airport);
 		   break;
 
@@ -65,7 +68,7 @@ void runSelectedOption(int optionNumber ,AirportManager *manager,Airline *airlin
 			printf("Please enter destination Airport IATA code:\n");
 			myGets(tempDestIata,LEN);
 
-			int numOfFlightsOnLine = checkHowManyFlightsOnLine(airline, tempSrcIata, tempDestIata);
+			int numOfFlightsOnLine = checkHowManyFlightsOnLine(airline->allFlights,airline->numOfFlights, tempSrcIata, tempDestIata);
 			printf("The number of flights that departure from %s and landing at %s is: %d\n",
 					tempSrcIata,
 					tempDestIata,

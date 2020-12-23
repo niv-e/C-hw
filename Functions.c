@@ -28,12 +28,6 @@ char* myGets(char* buf, size_t size)
 }
 
 
-void myBufferCleaner()
-{
-	while ((getchar()) != '\n')
-			 {
-			 }
-}
 
 char* getStringInLowerCaseAndWordIndexs(int* numOfWords ,int** wordsIndexes)
 /*
@@ -81,8 +75,7 @@ char* getStringInLowerCaseAndWordIndexs(int* numOfWords ,int** wordsIndexes)
 			tempChar=getchar();
 	}
 	tempName[i]='\0';
-//	if(*numOfWords>1)
-//		*numOfWords=*numOfWords-1;
+
 	char* name=strdup(tempName); //this function do dynamic allocation make sure the free "name"
 	*wordsIndexes = tempWordIndex; //make sure to free wordIndexes
 	return name;

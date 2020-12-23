@@ -25,6 +25,7 @@ Flight* initFlight(AirportManager* manager);
 int checkIfFlightLandingAtDest(Flight flight ,char* iataCodeSrc, char* iataCodeDest);
 void printFlightDetails(Flight* flight);
 void freeFlight(Flight* flight);
-//int checkHowManyFlightsOnLine (Flight** allFlight ,int numOfCurrentFlights,char* iataCodeSrc, char* iataCodeDest );
+int checkHowManyFlightsOnLine (Flight **allFlights,int allFlightSize ,char* iataCodeSrc, char* iataCodeDest);
+
 
 #endif /* FLIGHT_H_ */

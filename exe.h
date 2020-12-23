@@ -14,6 +14,5 @@
 
 void runMenu();
 void runSelectedOption(int optionNumber ,AirportManager *manager,Airline *airline);
-//void addFlightToAirline(AirportManager *manager, Airline *airline);
 
 #endif /* EXE_H_ */

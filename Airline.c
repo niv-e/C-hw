@@ -2,6 +2,8 @@
 #include "Airline.h"
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+
 
 #include "Airport.h"
 #include "Functions.h"
@@ -11,6 +13,15 @@ int initAirline(Airline *airline)
 	printf("Initializing the Airline\n");
 	airline->numOfFlights=0;
 	airline->allFlights=(Flight**)malloc(sizeof(Flight*)); // need to free
+
+    if(!(airline->allFlights))
+    {
+        printf("Error! memory not allocated.");
+        return 0;
+    }
+
+
+
 	int res;
 	res = setAirlineName(airline);
 	if(res)
@@ -18,6 +29,7 @@ int initAirline(Airline *airline)
 	else
 	{
 		printf("Invalid name! please try again...\n");
+		freeAirLine(airline);
 		return 0;
 	}
 
@@ -29,9 +41,9 @@ int setAirlineName(Airline *airline)
 	char tempName[LEN];
 	myGets(tempName, LEN);
 	int tempSize = sizeof(tempName)/sizeof(tempName[0]);
-	if(tempSize==0)
+	if(tempSize==0 ||isspace(*tempName)) //check if start with ' '
 	{
-				return 0;
+		return 0;
 	}
 	airline->name=strdup(tempName);
 	return 1;
@@ -48,30 +60,6 @@ int addFlightToAirline(Airline *airline , Flight *flight)
 	return 1;
 }
 
-int checkHowManyFlightsOnLine (Airline *airline ,char* iataCodeSrc, char* iataCodeDest )
-{
-	int numOfCourrentFlight = airline->numOfFlights;
-	int count=0;
-	int numOfMatchFlights=0;
-	int sameSrc=1;
-	int sameDest=1;
-
-	while(count <numOfCourrentFlight)
-	{
-		char* flightSrc =(airline->allFlights[count]->iataCodeSrc);
-		char* flightDest = airline->allFlights[count]->iataCodeDest;
-		sameSrc = strcmp(flightSrc, iataCodeSrc);
-		sameDest = strcmp(flightDest , iataCodeDest);
-		if(sameDest==0 && sameSrc==0)
-		{
-			numOfMatchFlights++;
-		}
-		count ++;
-	}
-	return numOfMatchFlights;
-
-}
-
 void printAirline(Airline* airline)
 {
 	printf("Airline name:\t%s\n",airline->name);
@@ -86,7 +74,6 @@ void printAirline(Airline* airline)
 	while(i<airline->numOfFlights)
 	{
 		printFlightDetails((airline->allFlights[i]));
-//		printAirportDetails((airline->allFlights[i]));
 		printf("\n");
 		i++;
 	}
@@ -98,7 +85,7 @@ void freeAirLine(Airline* airline)
 	int count =0;
 	while(count<airline->numOfFlights)
 	{
-		free(airline->allFlights[count]);
+		free(airline->allFlights[count++]);
 	}
 
 }

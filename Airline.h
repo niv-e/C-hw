@@ -26,7 +26,6 @@ typedef struct
 int setAirlineName(Airline *airline);
 int initAirline(Airline *airline);
 int addFlightToAirline(Airline *airline , Flight *flight);
-int checkHowManyFlightsOnLine (Airline *airline ,char* iataCodeSrc, char* iataCodeDest );
 void printAirline(Airline* airline);
 void freeAirLine(Airline* airline);
 

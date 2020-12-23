@@ -7,9 +7,7 @@
 
 #ifndef AIRPORTMANAGER_H_
 #define AIRPORTMANAGER_H_
-
 #include "Airport.h"
-//#include "Airline.h"
 
 typedef struct
 {
@@ -22,7 +20,7 @@ int addNewAirport(AirportManager *manager , const Airport *airport);
 Airport* getAirportByIataCode(AirportManager *manager, const char *iataCode);
 int initAirportManager(AirportManager *manager);
 void printAirportManager(AirportManager *manager);
-int checkIfIataCodeExist(AirportManager *manager , char* iataCode);
+int checkIfIataCodeExist(AirportManager *manager ,const char* iataCode);
 void freeAirportManager(AirportManager *manager);
 
 

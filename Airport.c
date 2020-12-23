@@ -70,7 +70,8 @@ int setAirportCountry(Airport* pAirport)
 
 	char tempCountry[LEN];
 	myGets(tempCountry, LEN);
-
+	if(isspace(tempCountry[0]))
+		return 0;
 	int tempSize = sizeof(tempCountry)/sizeof(tempCountry[0]);
 	if(tempSize==0)
 	{
@@ -133,12 +134,19 @@ Airport* initAirport()
 	int countryFlag , nameFlag ,iataFlag;
 
 	countryFlag = setAirportCountry(airport);
+	if(!(countryFlag))
+		{
+			printf("Invalid country please try again.. \n");
+			free(airport);
+			return NULL;
+		}
 	nameFlag = setAirportName(airport);
 	iataFlag= setAirpotIata(airport);
 
-	if(!(countryFlag || nameFlag || iataFlag))
+	if(!( nameFlag && iataFlag))
 	{
 		printf("Placement failed ,some fields are missing please try again.. \n");
+		free(airport);
 		return NULL;
 	}
 	return airport;
